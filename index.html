@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Biznesingiz puldami yoki zarardami? — Bepul shablon</title>
+<template id="__bundler_thumbnail" data-bg-color="#0A0F0D">
+  <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <rect x="80" y="60" width="240" height="280" rx="24" fill="#22C55E"/>
+    <text x="200" y="230" text-anchor="middle" font-family="monospace" font-weight="900" font-size="160" fill="#052711">$</text>
+  </svg>
+</template>
+<script>
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "accent_color": "#22C55E",
+    "bg_mode": "dark",
+    "show_timer": true,
+    "timer_seconds": 119,
+    "telegram_url": "https:\/\/t.me\/cashflow_excelmaktabi_bot?start",
+    "hero_image": "",
+    "headline_variant": "A"
+  }/*EDITMODE-END*/;
+</script>
+<style>
+  :root {
+    --bg: #0A0F0D;
+    --bg-2: #0F1614;
+    --ink: #FFFFFF;
+    --muted: #A8B0AD;
+    --line: rgba(255,255,255,0.08);
+    --accent: #22C55E;
+    --accent-deep: #16A34A;
+    --accent-dark: #0E6B34;
+    --chip: rgba(34,197,94,0.12);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  .page {
+    max-width: 480px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 18px;
+    background:
+      radial-gradient(ellipse at 70% 35%, rgba(34,197,94,0.10), transparent 55%),
+      radial-gradient(ellipse at 0% 80%, rgba(34,197,94,0.06), transparent 50%),
+      var(--bg);
+  }
+
+  /* ─── Headline ────────────────────────────────────── */
+
+  .headline {
+    text-align: center;
+    font-weight: 900;
+    font-size: clamp(22px, 7.2vw, 30px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .headline .acc { color: var(--accent); }
+
+  /* ─── Hero grid: benefits + portrait ──────────────── */
+  .hero-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 8px;
+    align-items: center;
+    margin-top: 14px;
+    min-height: 0;
+    position: relative;
+  }
+
+  .benefits {
+    display: flex; flex-direction: column; gap: 12px;
+    z-index: 2;
+  }
+  .bl-label {
+    font-size: 13px; font-weight: 700; color: var(--muted);
+    letter-spacing: -0.01em;
+    margin-bottom: 2px;
+  }
+  .bl-item {
+    font-size: 13.5px; line-height: 1.38;
+    color: #E8EDEB;
+    font-weight: 500;
+    padding-left: 14px;
+    position: relative;
+    letter-spacing: -0.005em;
+    text-wrap: pretty;
+  }
+  .bl-item::before {
+    content: '—';
+    position: absolute; left: 0; top: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .bl-item b { font-weight: 800; color: #fff; }
+
+  /* ─── Template preview screenshot ──────────────────── */
+  .portrait {
+    position: relative;
+    align-self: center;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 0;
+    height: 100%;
+  }
+  .preview-stage {
+    position: relative;
+    width: 100%;
+    max-width: 200px;
+  }
+  .preview-stage::before {
+    content: ''; position: absolute;
+    inset: -8% -10% -5% -10%;
+    background: radial-gradient(ellipse at center, rgba(34,197,94,0.35), transparent 65%);
+    filter: blur(22px);
+    z-index: 0;
+  }
+
+  /* "screenshot" badge */
+  .shot-tag {
+    position: absolute;
+    top: -10px; left: -6px;
+    z-index: 5;
+    background: var(--accent);
+    color: #052711;
+    font-size: 9px; font-weight: 900;
+    letter-spacing: 0.08em;
+    padding: 4px 9px;
+    border-radius: 6px;
+    transform: rotate(-6deg);
+    box-shadow: 0 6px 16px rgba(34,197,94,0.5);
+  }
+
+  /* the mock screenshot */
+  .shot {
+    position: relative; z-index: 2;
+    background: #fff;
+    border-radius: 10px;
+    padding: 7px;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+    transform: rotate(2deg);
+  }
+  .shot-title {
+    font-size: 6.5px; font-weight: 700; color: #0E1E2B;
+    text-align: center;
+    padding: 3px 0; border: 1px solid #E4E8EC; border-radius: 3px;
+    margin-bottom: 5px;
+    letter-spacing: 0.02em;
+  }
+  .shot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+  .shot-card { border: 1px solid #E4E8EC; border-radius: 3px; padding: 4px 5px; }
+  .shot-hd { font-size: 5.5px; font-weight: 900; margin-bottom: 3px; letter-spacing: 0.04em; }
+  .shot-hd.in { color: #2E8B57; }
+  .shot-hd.out { color: #C0504D; }
+  .shot-row { display: flex; justify-content: space-between; font-size: 5px; color: #2B3E4F; line-height: 1.5; }
+  .shot-row .v { font-weight: 700; color: #0E1E2B; font-variant-numeric: tabular-nums; }
+  .shot-row.alt { background: #F4F6F8; margin: 0 -2px; padding: 0 2px; border-radius: 2px; }
+  .shot-total { border-top: 1px solid #E4E8EC; margin-top: 2px; padding-top: 2px; display: flex; justify-content: space-between; font-size: 5.5px; font-weight: 900; }
+  .shot-total .v.in { color: #2E8B57; }
+  .shot-total .v.out { color: #C0504D; }
+
+  .shot-profit {
+    margin-top: 3px; background: #EAF4DF; border: 1px solid #CFE3BD;
+    border-radius: 3px; padding: 3px 5px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .shot-profit .lab { font-size: 5px; font-weight: 900; color: #3B6B2A; line-height: 1.2; }
+  .shot-profit .lab span { display: block; font-weight: 500; color: #567F49; font-size: 4.5px; }
+  .shot-profit .val { text-align: right; font-size: 7px; font-weight: 900; color: #2A5E1C; font-variant-numeric: tabular-nums; line-height: 1; }
+  .shot-profit .val span { display: block; font-size: 4.5px; font-weight: 500; color: #567F49; margin-top: 1px; }
+
+  .shot-charts {
+    margin-top: 3px; border: 1px solid #E4E8EC; border-radius: 3px;
+    padding: 4px; display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+  }
+  .shot-col { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .shot-ct { font-size: 5px; font-weight: 900; color: #2B3E4F; letter-spacing: 0.04em; }
+  .shot-donut { width: 30px; height: 30px; }
+  .shot-lg { font-size: 4.5px; color: #2B3E4F; line-height: 1.3; text-align: center; }
+  .shot-lg span { display: inline-block; width: 4px; height: 4px; border-radius: 1px; margin-right: 2px; vertical-align: middle; }
+
+  /* real-image mode */
+  .shot.has-image {
+    padding: 0; background: transparent; box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+    aspect-ratio: 3/4;
+    background-size: cover; background-position: center;
+    border-radius: 10px;
+  }
+  .shot.has-image > * { display: none; }
+
+  /* ─── Timer ───────────────────────────────────────── */
+  .timer-wrap {
+    display: flex; align-items: center; gap: 10px;
+    margin: 12px 0 0;
+    z-index: 3; position: relative;
+  }
+  .timer {
+    background: #fff;
+    color: #0A0F0D;
+    font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    padding: 8px 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    font-variant-numeric: tabular-nums;
+  }
+  .timer-lbl {
+    font-size: 11px; color: var(--muted); font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+  }
+  .timer-lbl b { color: #fff; font-weight: 800; display: block; font-size: 12px; }
+
+  /* ─── CTA ──────────────────────────────────────────── */
+  .cta-wrap { margin-top: 14px; flex-shrink: 0; }
+  .cta-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%;
+    padding: 18px 16px;
+    background: var(--accent);
+    color: #052711;
+    border: none; border-radius: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 900; font-size: 15px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow:
+      0 4px 0 var(--accent-dark),
+      0 12px 30px -6px rgba(34,197,94,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.25);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+    text-wrap: balance;
+    position: relative;
+  }
+  .cta-btn:active {
+    transform: translateY(3px);
+    box-shadow:
+      0 1px 0 var(--accent-dark),
+      0 6px 16px -6px rgba(34,197,94,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+  .cta-btn .arr { font-size: 18px; line-height: 1; transform: translateY(-1px); position: relative; z-index: 2; }
+
+  /* Attention-grabbing pulse ring + sheen */
+  .cta-btn {
+    animation: cta-pulse 2.2s ease-out infinite;
+  }
+  @keyframes cta-pulse {
+    0%   { box-shadow: 0 4px 0 var(--accent-dark), 0 12px 30px -6px rgba(34,197,94,0.45), inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 0 rgba(34,197,94,0.55); }
+    60%  { box-shadow: 0 4px 0 var(--accent-dark), 0 12px 30px -6px rgba(34,197,94,0.45), inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 18px rgba(34,197,94,0); }
+    100% { box-shadow: 0 4px 0 var(--accent-dark), 0 12px 30px -6px rgba(34,197,94,0.45), inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 0 rgba(34,197,94,0); }
+  }
+  .cta-btn::before {
+    content: ''; position: absolute; inset: 0;
+    border-radius: 14px; overflow: hidden; pointer-events: none;
+    background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,0.55) 45%, rgba(255,255,255,0.55) 52%, transparent 75%);
+    background-size: 220% 100%;
+    background-position: 180% 0;
+    animation: cta-sheen 2.8s ease-in-out infinite;
+    mix-blend-mode: overlay;
+  }
+  @keyframes cta-sheen {
+    0%   { background-position: 180% 0; }
+    55%  { background-position: -80% 0; }
+    100% { background-position: -80% 0; }
+  }
+  .cta-btn:active { animation: none; }
+
+  /* Finger-tap hint */
+  .cta-hint {
+    position: absolute;
+    right: 14px; top: 50%;
+    pointer-events: none;
+    font-size: 22px;
+    transform-origin: 30% 30%;
+    animation: tap-hint 2.2s ease-in-out infinite;
+    z-index: 3;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
+  }
+  @keyframes tap-hint {
+    0%, 70%, 100% { transform: translateY(-50%) scale(1) rotate(-8deg); opacity: 1; }
+    40%           { transform: translateY(-38%) scale(0.85) rotate(-2deg); opacity: 0.9; }
+  }
+
+  .cta-meta {
+    display: flex; justify-content: center; align-items: center; gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    font-size: 11px; color: var(--muted); font-weight: 500;
+  }
+  .cta-meta .dot { width: 3px; height: 3px; background: var(--muted); border-radius: 50%; opacity: 0.6; }
+  .cta-meta b { color: #fff; font-weight: 700; }
+
+  /* ─── Tweaks ──────────────────────────────────────── */
+  #tweaks {
+    position: fixed; top: 12px; right: 12px;
+    width: 260px;
+    background: #141B18;
+    color: #E8EDEB;
+    border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    z-index: 200; display: none;
+    font-size: 12px;
+  }
+  #tweaks.show { display: block; }
+  #tweaks h4 { margin: 0; padding: 11px 14px; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+  #tweaks .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  #tweaks .row:last-child { border-bottom: none; }
+  #tweaks label { font-size: 11px; color: var(--muted); font-weight: 600; }
+  #tweaks input[type=color] { width: 30px; height: 26px; border: 1px solid var(--line); border-radius: 5px; padding: 0; background: transparent; cursor: pointer; }
+  #tweaks select, #tweaks input[type=text], #tweaks input[type=number] {
+    flex: 1; font-size: 11px; padding: 4px 7px;
+    background: #0A0F0D; color: #E8EDEB;
+    border: 1px solid var(--line); border-radius: 5px; font-family: inherit;
+  }
+  .sw { position: relative; width: 36px; height: 20px; background: #2A332F; border-radius: 999px; cursor: pointer; transition: background 0.15s; flex-shrink: 0; }
+  .sw::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: #fff; border-radius: 50%; transition: transform 0.15s; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+  .sw.on { background: var(--accent); }
+  .sw.on::after { transform: translateX(16px); }
+
+  /* ─── Short screens ──────────────────────────────── */
+  @media (max-height: 720px) {
+    .headline { font-size: 22px; line-height: 1.06; }
+    .bl-item { font-size: 12.5px; }
+    .bl-label { font-size: 12px; }
+    .timer { font-size: 22px; padding: 7px 14px; }
+    .cta-btn { padding: 16px; font-size: 14px; }
+  }
+  @media (max-height: 620px) {
+    .page { padding: 10px 18px 14px; }
+    .headline { font-size: 20px; }
+    .kicker { margin: 0 auto 8px; font-size: 9px; padding: 4px 9px; }
+    .hero-grid { margin-top: 10px; gap: 6px; }
+    .benefits { gap: 8px; }
+    .timer-wrap { margin-top: 8px; }
+    .cta-wrap { margin-top: 10px; }
+  }
+  @media (max-width: 340px) {
+    .page { padding: 12px 14px 14px; }
+    .headline { font-size: 20px; }
+    .bl-item { font-size: 12px; padding-left: 12px; }
+    .preview-stage { max-width: 170px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Headline -->
+  <h1 class="headline" id="headline">
+    BIZNESINGIZ <span class="acc">PULDAMI</span> YOKI
+    <span class="acc">ZARARDAMI?</span>
+    <br>10 DAQIQADA BEPUL BILIB OLING
+  </h1>
+
+  <!-- Hero grid -->
+  <div class="hero-grid">
+    <div class="benefits">
+      <div class="bl-label">Shablon orqali siz:</div>
+      <div class="bl-item">Bugunoq korxonada <b>qancha pul borligini</b> ko'rasiz</div>
+      <div class="bl-item"><b>Sof foyda va marja foizini</b> avtomatik hisoblaysiz</div>
+      <div class="bl-item">Eng ko'p pul <b>qayoqqa ketayotganini</b> diagrammada ko'rasiz</div>
+    </div>
+
+    <div class="portrait">
+      <div class="preview-stage">
+        <div class="shot-tag">SHABLON ↓</div>
+        <div class="shot" id="shot">
+          <div class="shot-title">Excel Maktabi · Kirim Chiqim</div>
+          <div class="shot-grid">
+            <div class="shot-card">
+              <div class="shot-hd in">▲ KIRIM</div>
+              <div class="shot-row"><span>Sotuv</span><span class="v">25 000 000</span></div>
+              <div class="shot-row alt"><span>Boshqa</span><span class="v">2 000 000</span></div>
+              <div class="shot-total"><span>Jami</span><span class="v in">27 000 000</span></div>
+            </div>
+            <div class="shot-card">
+              <div class="shot-hd out">▼ CHIQIM</div>
+              <div class="shot-row"><span>Arenda</span><span class="v">3 000 000</span></div>
+              <div class="shot-row alt"><span>Maosh</span><span class="v">8 000 000</span></div>
+              <div class="shot-row"><span>Homashyo</span><span class="v">7 000 000</span></div>
+              <div class="shot-row alt"><span>Kommunal</span><span class="v">1 500 000</span></div>
+              <div class="shot-total"><span>Jami</span><span class="v out">21 500 000</span></div>
+            </div>
+          </div>
+          <div class="shot-profit">
+            <div class="lab">Sof foyda<span>daromad topmoqda ✓</span></div>
+            <div class="val">5 500 000<span>marja 20%</span></div>
+          </div>
+          <div class="shot-charts">
+            <div class="shot-col">
+              <div class="shot-ct">DAROMAD</div>
+              <svg class="shot-donut" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#E9EDF0" stroke-width="7"/>
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#6DA0BD" stroke-width="7" stroke-dasharray="82 88" transform="rotate(-90 18 18)"/>
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#1F4760" stroke-width="7" stroke-dasharray="6 88" stroke-dashoffset="-82" transform="rotate(-90 18 18)"/>
+              </svg>
+              <div class="shot-lg"><span style="background:#6DA0BD"></span>Sotuv 93%</div>
+            </div>
+            <div class="shot-col">
+              <div class="shot-ct">XARAJAT</div>
+              <svg class="shot-donut" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#E9EDF0" stroke-width="7"/>
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#6DA0BD" stroke-width="7" stroke-dasharray="12.3 75.7" transform="rotate(-90 18 18)"/>
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#1F4760" stroke-width="7" stroke-dasharray="32.6 55.4" stroke-dashoffset="-12.3" transform="rotate(-90 18 18)"/>
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#E8743C" stroke-width="7" stroke-dasharray="29 59" stroke-dashoffset="-44.9" transform="rotate(-90 18 18)"/>
+              </svg>
+              <div class="shot-lg"><span style="background:#E8743C"></span>Homashyo 33%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timer -->
+  <div class="timer-wrap" id="timerWrap">
+    <div class="timer" id="timer">0:21</div>
+    <div class="timer-lbl">
+      <b>Aksiya tugashiga</b>
+      qolgan vaqt
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <a class="cta-btn" id="cta" href="#" onclick="handleCta(event)">
+      SHABLONNI BEPUL OLISH
+      <span class="arr">→</span>
+      <span class="cta-hint" aria-hidden="true">👆</span>
+    </a>
+    <div class="cta-meta">
+      <span><b>100% bepul</b></span>
+      <span class="dot"></span>
+      <span>Google Sheets</span>
+      <span class="dot"></span>
+      <span>10 daqiqada</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Tweaks -->
+<div id="tweaks">
+  <h4>Tweaks</h4>
+  <div class="row">
+    <label>Accent rangi</label>
+    <input type="color" id="tw-accent" value="#22C55E">
+  </div>
+  <div class="row">
+    <label>Headline variant</label>
+    <select id="tw-headline">
+      <option value="A">A — Puldami / Zarardami</option>
+      <option value="B">B — Moliyachi o'rnini...</option>
+      <option value="C">C — 10 daqiqada hisobot</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Taymer</label>
+    <div class="sw on" id="tw-timer"></div>
+  </div>
+  <div class="row">
+    <label>Taymer (soniya)</label>
+    <input type="number" id="tw-secs" value="600" min="60" max="3600" step="60">
+  </div>
+  <div class="row">
+    <label style="flex-shrink:0">Surat URL</label>
+    <input type="text" id="tw-img" placeholder="https://..." value="">
+  </div>
+  <div class="row">
+    <label style="flex-shrink:0">Telegram URL</label>
+    <input type="text" id="tw-url" value="https://t.me/excelmaktabi">
+  </div>
+</div>
+
+<script>
+  const HEADLINES = {
+    A: `BIZNESINGIZ <span class="acc">PULDAMI</span> YOKI <span class="acc">ZARARDAMI?</span><br>10 DAQIQADA BEPUL BILIB OLING`,
+    B: `<span class="acc">MOLIYACHI O'RNINI</span> BOSADIGAN TAYYOR SHABLON<br><span class="acc">10 DAQIQADA</span> ISHGA TUSHIRING`,
+    C: `<span class="acc">10 DAQIQADA</span> BIZNESINGIZ<br>FOYDA TOPYAPTIMI — BILIB OLING`
+  };
+
+  let state = { ...TWEAK_DEFAULTS };
+
+  function darken(hex, amt) {
+    const m = hex.match(/^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i);
+    if (!m) return hex;
+    const c = [parseInt(m[1],16), parseInt(m[2],16), parseInt(m[3],16)].map(v => Math.max(0, Math.round(v * (1 - amt))));
+    return '#' + c.map(v => v.toString(16).padStart(2,'0')).join('');
+  }
+
+  function applyState() {
+    document.documentElement.style.setProperty('--accent', state.accent_color);
+    document.documentElement.style.setProperty('--accent-deep', darken(state.accent_color, 0.1));
+    document.documentElement.style.setProperty('--accent-dark', darken(state.accent_color, 0.35));
+    document.documentElement.style.setProperty('--chip', hexA(state.accent_color, 0.12));
+
+    document.getElementById('headline').innerHTML = HEADLINES[state.headline_variant] || HEADLINES.A;
+    document.getElementById('timerWrap').style.display = state.show_timer ? 'flex' : 'none';
+
+    // screenshot swap: if a real screenshot URL is provided, replace mock markup
+    const shot = document.getElementById('shot');
+    if (state.hero_image) {
+      shot.classList.add('has-image');
+      shot.style.backgroundImage = `url('${state.hero_image}')`;
+    } else {
+      shot.classList.remove('has-image');
+      shot.style.backgroundImage = '';
+    }
+
+    // sync inputs
+    setVal('tw-accent', state.accent_color);
+    setVal('tw-headline', state.headline_variant);
+    setVal('tw-secs', state.timer_seconds);
+    setVal('tw-img', state.hero_image);
+    setVal('tw-url', state.telegram_url);
+    const tt = document.getElementById('tw-timer'); if (tt) tt.classList.toggle('on', !!state.show_timer);
+  }
+
+  function setVal(id, v) { const el = document.getElementById(id); if (el && el.value !== String(v)) el.value = v; }
+
+  function hexA(hex, a) {
+    const m = hex.match(/^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i);
+    if (!m) return `rgba(34,197,94,${a})`;
+    return `rgba(${parseInt(m[1],16)},${parseInt(m[2],16)},${parseInt(m[3],16)},${a})`;
+  }
+
+  function saveKey(key, val) {
+    state[key] = val;
+    applyState();
+    if (key === 'timer_seconds' || key === 'show_timer') startTimer();
+    try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [key]: val } }, '*'); } catch(e) {}
+  }
+
+  // Timer
+  let timerInterval;
+  function startTimer() {
+    clearInterval(timerInterval);
+    if (!state.show_timer) return;
+    const storageKey = 'cashflow_timer_end';
+    let end = parseInt(localStorage.getItem(storageKey) || '0', 10);
+    const now = Date.now();
+    if (!end || end < now) {
+      end = now + (state.timer_seconds * 1000);
+      localStorage.setItem(storageKey, end);
+    }
+    const render = () => {
+      const rem = Math.max(0, Math.floor((end - Date.now()) / 1000));
+      const m = Math.floor(rem / 60);
+      const s = rem % 60;
+      document.getElementById('timer').textContent = `${m}:${String(s).padStart(2, '0')}`;
+      if (rem <= 0) {
+        clearInterval(timerInterval);
+        localStorage.removeItem(storageKey);
+      }
+    };
+    render();
+    timerInterval = setInterval(render, 1000);
+  }
+
+  function handleCta(e) {
+    e.preventDefault();
+    window.open(state.telegram_url, '_blank');
+  }
+
+  // Tweaks wiring
+  document.getElementById('tw-accent').addEventListener('input', e => saveKey('accent_color', e.target.value));
+  document.getElementById('tw-headline').addEventListener('change', e => saveKey('headline_variant', e.target.value));
+  document.getElementById('tw-timer').addEventListener('click', () => saveKey('show_timer', !state.show_timer));
+  document.getElementById('tw-secs').addEventListener('change', e => {
+    localStorage.removeItem('cashflow_timer_end');
+    saveKey('timer_seconds', parseInt(e.target.value, 10) || 600);
+  });
+  document.getElementById('tw-img').addEventListener('change', e => saveKey('hero_image', e.target.value));
+  document.getElementById('tw-url').addEventListener('change', e => saveKey('telegram_url', e.target.value));
+
+  window.addEventListener('message', (ev) => {
+    if (!ev.data || typeof ev.data !== 'object') return;
+    if (ev.data.type === '__activate_edit_mode') document.getElementById('tweaks').classList.add('show');
+    if (ev.data.type === '__deactivate_edit_mode') document.getElementById('tweaks').classList.remove('show');
+  });
+  try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e) {}
+
+  applyState();
+  startTimer();
+</script>
+</body>
+</html>
