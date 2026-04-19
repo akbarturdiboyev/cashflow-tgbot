@@ -230,7 +230,11 @@
   .timer-lbl b { color: #fff; font-weight: 800; display: block; font-size: 12px; }
 
   /* ─── CTA ──────────────────────────────────────────── */
-  .cta-wrap { margin-top: 14px; flex-shrink: 0; }
+  .cta-wrap {
+    margin-top: 14px; flex-shrink: 0;
+    position: relative;
+  }
+
   .cta-btn {
     display: flex; align-items: center; justify-content: center; gap: 10px;
     width: 100%;
@@ -244,6 +248,7 @@
     text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
+    overflow: hidden;
     box-shadow:
       0 4px 0 var(--accent-dark),
       0 12px 30px -6px rgba(34,197,94,0.45),
@@ -251,51 +256,39 @@
     transition: transform 0.08s ease, box-shadow 0.08s ease;
     text-wrap: balance;
     position: relative;
+    animation: cta-breath 2.6s ease-in-out infinite 0.5s;
+    will-change: transform;
+  }
+  @keyframes cta-breath {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.012); }
   }
   .cta-btn:active {
-    transform: translateY(3px);
+    transform: translateY(3px) scale(1) !important;
     box-shadow:
       0 1px 0 var(--accent-dark),
       0 6px 16px -6px rgba(34,197,94,0.45),
       inset 0 1px 0 rgba(255,255,255,0.25);
+    animation: none;
   }
+
   .cta-btn .arr { font-size: 18px; line-height: 1; transform: translateY(-1px); position: relative; z-index: 2; }
 
-  /* Attention-grabbing pulse ring — compositor-only (transform+opacity) */
-  .cta-btn {
-    will-change: transform;
-  }
-  .cta-btn::after {
-    content: '';
-    position: absolute; inset: -1px;
-    border-radius: 15px;
-    border: 2px solid var(--accent);
-    opacity: 0;
-    pointer-events: none;
-    animation: cta-ring 2.2s ease-out infinite 0.4s;
-    will-change: transform, opacity;
-  }
-  @keyframes cta-ring {
-    0%   { transform: scale(1); opacity: 0.6; }
-    70%  { transform: scale(1.14); opacity: 0; }
-    100% { transform: scale(1.14); opacity: 0; }
-  }
-  /* Sheen — transform-based (compositor-only) */
+  /* Sheen — clipped by overflow:hidden on .cta-btn */
   .cta-btn::before {
     content: ''; position: absolute; inset: 0;
-    border-radius: 14px; overflow: hidden; pointer-events: none;
-    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.55) 48%, rgba(255,255,255,0.45) 54%, transparent 68%);
-    transform: translateX(-220%);
-    animation: cta-sheen 2.8s ease-in-out infinite 0.6s;
+    border-radius: 14px; pointer-events: none;
+    background: linear-gradient(105deg, transparent 25%, rgba(255,255,255,0.45) 46%, rgba(255,255,255,0.35) 54%, transparent 72%);
+    transform: translateX(-200%);
+    animation: cta-sheen 3.6s ease-in-out infinite 1.2s;
     mix-blend-mode: overlay;
     will-change: transform;
   }
   @keyframes cta-sheen {
-    0%   { transform: translateX(-220%); }
-    55%  { transform: translateX(220%); }
-    100% { transform: translateX(220%); }
+    0%   { transform: translateX(-200%); }
+    45%  { transform: translateX(200%); }
+    100% { transform: translateX(200%); }
   }
-  .cta-btn:active::after, .cta-btn:active::before { animation: none; }
 
   /* Finger-tap hint */
   .cta-hint {
