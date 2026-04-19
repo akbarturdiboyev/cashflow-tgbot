@@ -128,7 +128,7 @@
     content: ''; position: absolute;
     inset: -8% -10% -5% -10%;
     background: radial-gradient(ellipse at center, rgba(34,197,94,0.35), transparent 65%);
-    filter: blur(22px);
+    filter: blur(8px);
     z-index: 0;
   }
 
@@ -261,30 +261,41 @@
   }
   .cta-btn .arr { font-size: 18px; line-height: 1; transform: translateY(-1px); position: relative; z-index: 2; }
 
-  /* Attention-grabbing pulse ring + sheen */
+  /* Attention-grabbing pulse ring — compositor-only (transform+opacity) */
   .cta-btn {
-    animation: cta-pulse 2.2s ease-out infinite;
+    will-change: transform;
   }
-  @keyframes cta-pulse {
-    0%   { box-shadow: 0 4px 0 var(--accent-dark), 0 12px 30px -6px rgba(34,197,94,0.45), inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 0 rgba(34,197,94,0.55); }
-    60%  { box-shadow: 0 4px 0 var(--accent-dark), 0 12px 30px -6px rgba(34,197,94,0.45), inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 18px rgba(34,197,94,0); }
-    100% { box-shadow: 0 4px 0 var(--accent-dark), 0 12px 30px -6px rgba(34,197,94,0.45), inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 0 rgba(34,197,94,0); }
+  .cta-btn::after {
+    content: '';
+    position: absolute; inset: -1px;
+    border-radius: 15px;
+    border: 2px solid var(--accent);
+    opacity: 0;
+    pointer-events: none;
+    animation: cta-ring 2.2s ease-out infinite 0.4s;
+    will-change: transform, opacity;
   }
+  @keyframes cta-ring {
+    0%   { transform: scale(1); opacity: 0.6; }
+    70%  { transform: scale(1.14); opacity: 0; }
+    100% { transform: scale(1.14); opacity: 0; }
+  }
+  /* Sheen — transform-based (compositor-only) */
   .cta-btn::before {
     content: ''; position: absolute; inset: 0;
     border-radius: 14px; overflow: hidden; pointer-events: none;
-    background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,0.55) 45%, rgba(255,255,255,0.55) 52%, transparent 75%);
-    background-size: 220% 100%;
-    background-position: 180% 0;
-    animation: cta-sheen 2.8s ease-in-out infinite;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.55) 48%, rgba(255,255,255,0.45) 54%, transparent 68%);
+    transform: translateX(-220%);
+    animation: cta-sheen 2.8s ease-in-out infinite 0.6s;
     mix-blend-mode: overlay;
+    will-change: transform;
   }
   @keyframes cta-sheen {
-    0%   { background-position: 180% 0; }
-    55%  { background-position: -80% 0; }
-    100% { background-position: -80% 0; }
+    0%   { transform: translateX(-220%); }
+    55%  { transform: translateX(220%); }
+    100% { transform: translateX(220%); }
   }
-  .cta-btn:active { animation: none; }
+  .cta-btn:active::after, .cta-btn:active::before { animation: none; }
 
   /* Finger-tap hint */
   .cta-hint {
@@ -293,9 +304,11 @@
     pointer-events: none;
     font-size: 22px;
     transform-origin: 30% 30%;
-    animation: tap-hint 2.2s ease-in-out infinite;
+    animation: tap-hint 2.2s ease-in-out infinite 0.4s;
+    animation-fill-mode: backwards;
     z-index: 3;
     filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
+    will-change: transform, opacity;
   }
   @keyframes tap-hint {
     0%, 70%, 100% { transform: translateY(-50%) scale(1) rotate(-8deg); opacity: 1; }
@@ -602,8 +615,10 @@
   });
   try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e) {}
 
-  applyState();
-  startTimer();
+  requestAnimationFrame(() => {
+    applyState();
+    startTimer();
+  });
 </script>
 </body>
 </html>
